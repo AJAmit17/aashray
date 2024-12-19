@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  id                String             @id @default(cuid()) @map("_id")
   clerkId           String             @unique
   email             String             @unique
   name              String?
@@ -21,39 +21,39 @@ model User {
 }
 
 model EmergencyContact {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(cuid()) @map("_id")
   name         String
   phone        String
   relationship String
-  userId       String   @db.ObjectId
+  userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
 model Resource {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid()) @map("_id")
   name        String
   type        String
   location    Json
   status      String   @default("AVAILABLE")
   quantity    Int?
   description String?
-  userId      String   @db.ObjectId
+  userId      String
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model Report {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid()) @map("_id")
   title       String
   description String
   type        String
   location    Json
   imageUrl    String?
   verified    Boolean  @default(false)
-  userId      String   @db.ObjectId
+  userId      String
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

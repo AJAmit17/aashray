@@ -43,18 +43,13 @@ export async function GET(req: Request) {
         const status = searchParams.get("status");
 
         const resources = await prisma.resource.findMany({
-            where: {
-                ...(type && { type }),
-                ...(status && { status }),
-            },
-            include: {
-                user: {
-                    select: {
-                        name: true,
-                        email: true,
-                    },
-                },
-            },
+            // where: {
+            //     ...(type && { type }),
+            //     ...(status && { status }),
+            // },
+            orderBy: {
+                createdAt: 'desc'
+            }
         });
 
         return NextResponse.json(resources);

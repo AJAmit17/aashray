@@ -1,49 +1,45 @@
 // "use client";
 
-// import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+// import { useEffect, useState } from "react";
 // import "leaflet/dist/leaflet.css";
-// import { Icon } from "leaflet";
-// import { Resource } from "@prisma/client";
+// import type { Map as LeafletMap } from "leaflet";
 
-// const customIcon = new Icon({
-//     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-//     iconSize: [25, 41],
-//     iconAnchor: [12, 41],
-// });
-
-// interface MapProps {
-//     resources: any[];
-// }
-
-// export default function Map({ resources }: MapProps) {
-//     return (
+// const Map = () => {
+//   const [map, setMap] = useState<LeafletMap | null>(null);
+  
+//   useEffect(() => {
+//     if (typeof window !== "undefined") {
+//       const L = require("leaflet");
+//       const { MapContainer, TileLayer, Marker, Popup } = require("react-leaflet");
+      
+//       const position: [number, number] = [51.505, -0.09];
+      
+//       const MapComponent = () => (
 //         <MapContainer
-//             center={[40.7128, -74.0060]}
-//             zoom={13}
-//             style={{ height: "100%", width: "100%" }}
+//           center={position}
+//           zoom={11}
+//           scrollWheelZoom={true}
+//           style={{ height: "400px", width: "600px" }}
+//           whenCreated={setMap}
 //         >
-//             <TileLayer
-//                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//             />
-//             {resources.map((resource) => (
-//                 <Marker
-//                     key={resource.id}
-//                     position={[resource.location.latitude, resource.location.longitude]}
-//                     icon={customIcon}
-//                 >
-//                     <Popup>
-//                         <div className="p-2">
-//                             <h3 className="font-semibold">{resource.name}</h3>
-//                             <p className="text-sm text-muted-foreground">{resource.type}</p>
-//                             <p className="text-sm">{resource.description}</p>
-//                             <p className="text-sm font-medium mt-1">
-//                                 Status: {resource.status.toLowerCase()}
-//                             </p>
-//                         </div>
-//                     </Popup>
-//                 </Marker>
-//             ))}
+//           <TileLayer
+//             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//           />
+//           <Marker position={position}>
+//             <Popup>
+//               A sample marker
+//             </Popup>
+//           </Marker>
 //         </MapContainer>
-//     );
-// }
+//       );
+      
+//       return MapComponent;
+//     }
+//     return null;
+//   }, []);
+
+//   return <div id="map">{map}</div>;
+// };
+
+// export default Map;
