@@ -1,77 +1,102 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Shield, AlertTriangle, Phone, Map } from "lucide-react";
-import Link from "next/link";
+'use client'
 
-export default function Home() {
-  const features = [
-    {
-      icon: Shield,
-      title: "Emergency Resources",
-      description: "Access critical resources and emergency supplies information",
-      href: "/resources"
-    },
-    {
-      icon: AlertTriangle,
-      title: "Real-time Alerts",
-      description: "Stay informed with immediate emergency updates and notifications",
-      href: "/alerts"
-    },
-    {
-      icon: Map,
-      title: "Interactive Map",
-      description: "View emergency facilities and safe routes in your area",
-      href: "/map"
-    },
-    {
-      icon: Phone,
-      title: "Emergency Contacts",
-      description: "Quick access to emergency services and important contacts",
-      href: "/emergency"
-    }
-  ];
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Search } from 'lucide-react'
+import { Input } from "@/components/ui/input"
+
+import Image from 'next/image'
+import { useRef } from 'react'
+import NewsSection from "@/components/shared/news-section"
+import WeatherSection from "@/components/shared/weather-section"
+import FeatureSection from "@/components/shared/feature-section"
+import Footer from "@/components/shared/footer"
+
+export default function DisasterManagement() {
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  })
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
 
   return (
-    <div className="space-y-8">
-      <section className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">
-          Disaster Management System
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Your comprehensive platform for disaster preparedness, response, and community resilience
-        </p>
-      </section>
+    <div ref={containerRef} className="min-h-screen relative bg-background">
+      <motion.div 
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.5, 0.8]) }}
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10"
+      ></motion.div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {features.map((feature) => (
-          <Link key={feature.title} href={feature.href}>
-            <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="space-y-4">
-                <feature.icon className="h-8 w-8 text-primary" />
-                <h2 className="font-semibold text-xl">{feature.title}</h2>
-                <p className="text-muted-foreground">{feature.description}</p>
+      <div className="relative z-20">
+
+        <div className="container mx-auto px-6 py-12">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-5xl font-bold leading-tight text-foreground mb-6">
+              Disaster Management & Emergency Response
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              Aashray helps you stay prepared and connected during emergencies
+            </p>
+            <div className="max-w-xl mx-auto relative">
+              <Input 
+                type="text" 
+                placeholder="Search for emergency services or locations..."
+                className="w-full pl-10 pr-4 py-3 bg-background/50 backdrop-blur-sm border-border"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="mb-20"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 bg-background/60 backdrop-blur-sm rounded-lg">
+                <h3 className="text-xl font-bold mb-4">Emergency Alerts</h3>
+                <p>Real-time notifications about natural disasters and emergencies in your area</p>
               </div>
-            </Card>
-          </Link>
-        ))}
-      </div>
-
-      <section className="text-center space-y-4">
-        <h2 className="text-2xl font-semibold">Need Immediate Assistance?</h2>
-        <div className="flex justify-center gap-4">
-          <Button size="lg" variant="destructive" asChild>
-            <Link href="/emergency">
-              <Phone className="mr-2 h-4 w-4" />
-              Emergency Contact
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/chat">
-              Get AI Assistance
-            </Link>
-          </Button>
+              <div className="p-6 bg-background/60 backdrop-blur-sm rounded-lg">
+                <h3 className="text-xl font-bold mb-4">Resource Locator</h3>
+                <p>Find nearby shelters, medical facilities, and emergency services</p>
+              </div>
+              <div className="p-6 bg-background/60 backdrop-blur-sm rounded-lg">
+                <h3 className="text-xl font-bold mb-4">Community Support</h3>
+                <p>Connect with local communities and emergency response teams</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </section>
+
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="container mx-auto px-6 mb-20"
+        >
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Weather Monitoring</h2>
+            <p className="text-muted-foreground">
+              Stay informed about weather conditions that could lead to potential emergencies
+            </p>
+          </div>
+          <WeatherSection />
+        </motion.div>
+
+        <FeatureSection />
+
+        <div className="bg-muted/50">
+          <NewsSection />
+        </div>
+      </div>
     </div>
-  );
+  )
 }

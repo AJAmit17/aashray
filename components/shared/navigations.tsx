@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Home, Map, MessageSquare, Phone, Shield } from "lucide-react";
+import { AlertTriangle, Home, Map, MessageSquare, Phone, Shield, Users, HandHelping, Siren, Book, MapPin, Package } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 
 export function Navigation() {
@@ -18,29 +18,34 @@ export function Navigation() {
             icon: Home,
         },
         {
-            href: "/map",
-            label: "Emergency Map",
-            icon: Map,
+            href: "/community",
+            label: "Community",
+            icon: Users,
         },
         {
-            href: "/resources",
-            label: "Resources",
-            icon: Shield,
-        },
-        {
-            href: "/alerts",
-            label: "Alerts",
-            icon: AlertTriangle,
-        },
-        {
-            href: "/chat",
-            label: "AI Assistant",
-            icon: MessageSquare,
+            href: "/crowd-source",
+            label: "Crowd Source",
+            icon: HandHelping,
         },
         {
             href: "/emergency",
             label: "Emergency",
-            icon: Phone,
+            icon: Siren,
+        },
+        {
+            href: "/guide",
+            label: "Guide",
+            icon: Book,
+        },
+        {
+            href: "/map",
+            label: "Map",
+            icon: MapPin,
+        },
+        {
+            href: "/resource",
+            label: "Resource",
+            icon: Package,
         },
     ];
 

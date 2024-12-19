@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { Navigation } from '@/components/shared/navigations'
 import { ThemeProvider } from '@/providers/theme-provider'
 import Script from 'next/script'
+import Footer from '@/components/shared/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +33,7 @@ export default function RootLayout({
             <main className="container mx-auto px-4 py-4 md:py-8 min-h-[calc(100vh-4rem)]">
               {children}
             </main>
+            <Footer />
             <Toaster />
             <link
               rel="stylesheet"
