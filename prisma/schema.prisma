@@ -16,7 +16,6 @@ model User {
   emergencyContacts EmergencyContact[]
   reports           Report[]
   resources         Resource[]
-  posts             Post[]             // New relation
   comments          Comment[]          // New relation
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -76,7 +75,6 @@ model Post {
   content   String
   imageUrl  String?
   userId    String
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments  Comment[]
   likes     Int       @default(0)
   createdAt DateTime  @default(now())

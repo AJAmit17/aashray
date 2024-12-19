@@ -4,6 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function GET() {
     try {
+        const { userId: clerkUserId } = await auth();
+
+        console.log(clerkUserId);
+
         const posts = await prisma.post.findMany({
             include: {
                 comments: true
@@ -22,8 +26,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const { userId } = await auth();
-        if (!userId) {
+        const { userId: clerkUserId } = await auth();
+        if (!clerkUserId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -34,9 +38,13 @@ export async function POST(req: Request) {
             return new NextResponse("Content is required", { status: 400 });
         }
 
-        const user = await prisma.user.findUnique({
-            where: { clerkId: userId }
+        const user = await prisma.post.findFirst({
+            where: { 
+                userId: clerkUserId
+            }
         });
+
+        console.log(user);
 
         if (!user) {
             return new NextResponse("User not found", { status: 404 });
@@ -45,7 +53,9 @@ export async function POST(req: Request) {
         const post = await prisma.post.create({
             data: {
                 content,
-                userId: user.id
+                imageUrl : "", 
+                userId: user.id,
+                likes: 0
             }
         });
 
