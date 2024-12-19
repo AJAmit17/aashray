@@ -1,5 +1,6 @@
 import { Github, Twitter } from "lucide-react"
 import Link from "next/link"
+import GoogleTranslator from "./translator"
 
 export default function Footer() {
   return (
@@ -44,9 +45,12 @@ export default function Footer() {
         </div>
         
         <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Weather App. All rights reserved.
-          </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Aashray. All rights reserved.
+            </p>
+            <GoogleTranslator />
+          </div>
         </div>
       </div>
     </footer>
