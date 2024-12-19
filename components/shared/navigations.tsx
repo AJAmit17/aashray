@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { UserButton, SignInButton, useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Home, Users, HandHelping, Siren, Book, MapPin, Package } from "lucide-react";
+import { Home, Users, HandHelping, Siren, Book, MapPin, Package, MessageCircleCodeIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 
 export function Navigation() {
@@ -27,6 +27,11 @@ export function Navigation() {
             href: "/crowd-source",
             label: "Crowd Source",
             icon: HandHelping,
+        },
+        {
+            href: "/chat",
+            label: "Chat",
+            icon: MessageCircleCodeIcon,
         },
         {
             href: "/emergency",
