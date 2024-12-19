@@ -25,7 +25,7 @@ export async function POST(req: Request) {
                 location,
                 quantity,
                 description,
-                userId: formattedUserId, // Use formatted ID
+                userId: formattedUserId,
             },
         });
 
@@ -43,10 +43,6 @@ export async function GET(req: Request) {
         const status = searchParams.get("status");
 
         const resources = await prisma.resource.findMany({
-            // where: {
-            //     ...(type && { type }),
-            //     ...(status && { status }),
-            // },
             orderBy: {
                 createdAt: 'desc'
             }
