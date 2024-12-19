@@ -9,6 +9,8 @@ export async function POST(req: Request) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        console.log(userId)
+
         const body = await req.json();
         const { message } = body;
 
