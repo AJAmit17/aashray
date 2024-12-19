@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-foreground">Weather App</h3>
+            <h3 className="text-lg font-bold text-foreground">Aashray</h3>
             <p className="text-muted-foreground">
               Your trusted source for weather information
             </p>

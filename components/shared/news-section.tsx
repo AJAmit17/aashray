@@ -15,19 +15,19 @@ export default function NewsSection() {
   const newsItems = [
     {
       title: "Climate change: Facing Earth's greatest challenge",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://bsmedia.business-standard.com/_media/bs/img/article/2024-08/29/full/1724908464-6407.jpg?im=FitAndFill=(826,465)",
       date: "May 30, 2023",
       admin: "admin"
     },
     {
       title: "Wildfires burn in Colorado and Texas",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://bsmedia.business-standard.com/_media/bs/img/article/2024-08/29/full/1724908464-6407.jpg?im=FitAndFill=(826,465)",
       date: "May 30, 2023",
       admin: "admin"
     },
     {
       title: "Severe storms hit major metropolitan areas",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://bsmedia.business-standard.com/_media/bs/img/article/2024-08/29/full/1724908464-6407.jpg?im=FitAndFill=(826,465)",
       date: "May 30, 2023",
       admin: "admin"
     }

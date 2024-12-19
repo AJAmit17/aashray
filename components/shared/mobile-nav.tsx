@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { UserButton, SignInButton, useAuth } from "@clerk/nextjs";
 
 interface Route {
     href: string;
@@ -21,6 +22,7 @@ interface MobileNavProps {
 export function MobileNav({ routes }: MobileNavProps) {
     const pathname = usePathname();
     const router = useRouter();
+    const { isSignedIn } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
     // Close menu when route changes
@@ -59,6 +61,20 @@ export function MobileNav({ routes }: MobileNavProps) {
                             </div>
                         </Link>
                     ))}
+                    <div className="px-6 py-3 border-t mt-auto">
+                        {isSignedIn ? (
+                            <div className="flex items-center gap-x-2">
+                                <UserButton afterSignOutUrl="/" />
+                                <span className="text-sm font-medium">Account</span>
+                            </div>
+                        ) : (
+                            <SignInButton mode="modal">
+                                <Button variant="default" className="w-full">
+                                    Sign In
+                                </Button>
+                            </SignInButton>
+                        )}
+                    </div>
                 </div>
             </SheetContent>
         </Sheet>

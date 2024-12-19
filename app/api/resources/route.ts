@@ -38,10 +38,6 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const { searchParams } = new URL(req.url);
-        const type = searchParams.get("type");
-        const status = searchParams.get("status");
-
         const resources = await prisma.resource.findMany({
             orderBy: {
                 createdAt: 'desc'

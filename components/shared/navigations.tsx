@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, SignInButton, useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Home, Map, MessageSquare, Phone, Shield, Users, HandHelping, Siren, Book, MapPin, Package } from "lucide-react";
+import { Home, Users, HandHelping, Siren, Book, MapPin, Package } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 
 export function Navigation() {
     const pathname = usePathname();
+    const { isSignedIn } = useAuth();
 
     const routes = [
         {
@@ -43,7 +44,7 @@ export function Navigation() {
             icon: MapPin,
         },
         {
-            href: "/resource",
+            href: "/resources",
             label: "Resource",
             icon: Package,
         },
@@ -84,7 +85,15 @@ export function Navigation() {
                         </div>
                     </div>
                     <div className="flex items-center gap-x-4">
-                        <UserButton afterSignOutUrl="/" />
+                        {isSignedIn ? (
+                            <UserButton afterSignOutUrl="/" />
+                        ) : (
+                            <SignInButton mode="modal">
+                                <Button variant="default">
+                                    Sign In
+                                </Button>
+                            </SignInButton>
+                        )}
                     </div>
                 </div>
             </div>
