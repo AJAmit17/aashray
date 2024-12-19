@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-// Sample disaster data
-const disasters = [
-  { id: 1, type: 'Flood', location: [22.5726, 88.3639], desc: 'Severe flooding in Kolkata' },
-  { id: 2, type: 'Earthquake', location: [28.7041, 77.1025], desc: 'Earthquake in Delhi region' },
-  { id: 3, type: 'Cyclone', location: [13.0827, 80.2707], desc: 'Cyclone warning in Chennai' },
-  { id: 4, type: 'Landslide', location: [30.9010, 75.8573], desc: 'Landslide in Ludhiana' }
-];
-
 export default function Home() {
+  const [disasters, setDisasters] = useState([]);
+
   useEffect(() => {
+    // Fetch disasters from API
+    fetch('/api/disasters')
+      .then(res => res.json())
+      .then(data => setDisasters(data))
+      .catch(error => console.error('Error fetching disasters:', error));
+  }, []);
+
+  useEffect(() => {
+    if (!disasters.length) return;
+
     const L = require('leaflet');
     
     const map = L.map('map').setView([20.5937, 78.9629], 5);
@@ -34,15 +38,16 @@ export default function Home() {
 
     // Add markers for each disaster
     disasters.forEach(disaster => {
-      L.marker(disaster.location, { icon: disasterIcon })
-        .bindPopup(`<b>${disaster.type}</b><br>${disaster.desc}`)
+      const location = disaster.location;
+      L.marker(location, { icon: disasterIcon })
+        .bindPopup(`<b>${disaster.type}</b><br>${disaster.description}`)
         .addTo(map);
     });
 
     return () => {
       map.remove();
     };
-  }, []);
+  }, [disasters]);
 
   return (
     <main>
