@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 export default function Home() {
   const [disasters, setDisasters] = useState([]);
+  const [resource, setResource] = useState([]);
 
   useEffect(() => {
     // Fetch disasters from API
@@ -12,10 +13,15 @@ export default function Home() {
       .then(res => res.json())
       .then(data => setDisasters(data))
       .catch(error => console.error('Error fetching disasters:', error));
+
+      fetch('/api/resources')
+      .then(res => res.json())
+      .then(data => setResource(data))
+      .catch(error => console.error('Error fetching disasters:', error));
   }, []);
 
   useEffect(() => {
-    if (!disasters.length) return;
+    if (!disasters.length && !resource.length) return;
 
     const L = require('leaflet');
     
@@ -26,9 +32,18 @@ export default function Home() {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Create custom icon
+    // Create custom icons
     const disasterIcon = L.icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const resourceIcon = L.icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
@@ -44,10 +59,24 @@ export default function Home() {
         .addTo(map);
     });
 
+    // Add markers for each resource
+    resource.forEach(res => {
+      const location = [res.location.latitude, res.location.longitude];
+      L.marker(location, { icon: resourceIcon })
+        .bindPopup(`
+          <b>${res.name}</b><br>
+          Type: ${res.type}<br>
+          Status: ${res.status}<br>
+          Quantity: ${res.quantity}<br>
+          ${res.description}
+        `)
+        .addTo(map);
+    });
+
     return () => {
       map.remove();
     };
-  }, [disasters]);
+  }, [disasters, resource]);
 
   return (
     <main>

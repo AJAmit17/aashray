@@ -29,6 +29,8 @@ export async function POST(req: Request) {
             },
         });
 
+        console.log(JSON.stringify(resource));
+
         return NextResponse.json(resource);
     } catch (error) {
         console.error("[RESOURCES_ERROR]", error);

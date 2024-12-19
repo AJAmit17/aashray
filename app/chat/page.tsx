@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MessageSquare } from "lucide-react";
 import { emergencyPrompts } from "@/lib/gemini";
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatPage() {
     const [message, setMessage] = useState("");
@@ -67,7 +68,11 @@ export default function ChatPage() {
                                     : "bg-muted max-w-[80%]"
                                 }`}
                         >
-                            {msg.content}
+                            <ReactMarkdown 
+                                className="prose prose-sm dark:prose-invert max-w-none"
+                            >
+                                {msg.content}
+                            </ReactMarkdown>
                         </div>
                     ))}
                 </div>
